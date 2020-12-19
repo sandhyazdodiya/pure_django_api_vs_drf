@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 import json
 from django.views import View
-from .mixins import JsonResponseMixin
-from .models import Update
+from app.mixins import JsonResponseMixin
+from app.models import Update
 from django.core.serializers import serialize
 # Create your views here.
 
