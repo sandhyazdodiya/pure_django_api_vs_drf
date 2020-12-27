@@ -1,18 +1,18 @@
 from django.urls import path
 from app_drf.views import (
     StatusAPIView,
-    StatusCreateAPIView,
     StatusDetailAPIView,
-    StatusUpdateAPIView,
-    StatusDeleteAPIView
+    # StatusCreateAPIView,
+    # StatusUpdateAPIView,
+    # StatusDeleteAPIView
 )
 
 urlpatterns = [
     path('', StatusAPIView.as_view()),
-    path('create/', StatusCreateAPIView.as_view()),
     path('detail/<int:pk>', StatusDetailAPIView.as_view()),
-    path('update/<int:pk>', StatusUpdateAPIView.as_view()),
-    path('delete/<int:pk>', StatusDeleteAPIView.as_view()),
+    # path('create/', StatusCreateAPIView.as_view()),
+    # path('update/<int:pk>', StatusUpdateAPIView.as_view()),
+    # path('delete/<int:pk>', StatusDeleteAPIView.as_view()),
 
 ]
 

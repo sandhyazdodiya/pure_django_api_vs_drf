@@ -6,7 +6,7 @@ import json
 # Create your models here.
 
 def upload_status_image(instance,filename):
-    return "app/{user}/{filename}".format(user=instance.user,filename=filename)
+    return "app_drf/{user}/{filename}".format(user=instance.user,filename=filename)
 
 
 class StatusQuerySet(models.QuerySet):
