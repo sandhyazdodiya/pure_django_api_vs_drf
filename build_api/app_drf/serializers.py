@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from app_drf.models import Status
-
+from accounts.serializers import UserPublicSerializer
 """
 Serializer ---> Converts to Json
 Serializer ---> Validates data
@@ -11,18 +11,39 @@ class CustomSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
 
+class StatusInlineSerializer(serializers.ModelSerializer):
+    uri  = serializers.SerializerMethodField(read_only = True)
 
-
-class StatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Status
         fields =[
+            "uri",
+            "id",
+            "content",
+            "image"
+        ]
+
+    def get_uri(self,obj):
+        return "/api/status/{id}/".format(id=obj.id)
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    user = UserPublicSerializer(read_only=True)
+    uri  = serializers.SerializerMethodField(read_only = True)
+
+    class Meta:
+        model = Status
+        fields =[
+            "uri",
             "id",
             "user",
             "content",
             "image"
         ]
         read_only_fields = ["user"]
+
+    def get_uri(self,obj):
+        return "/api/status/{id}/".format(id=obj.id)
 
 
     # To validate field name content 

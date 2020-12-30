@@ -37,12 +37,14 @@ data2 ={
     "content" : "this is new data"
 }
 
-r2 = requests.put(ENDPOINT,data=data2,headers=headers2)
+# r2 = requests.put(ENDPOINT,data=data2,headers=headers2)
 # r2 = requests.post(BASE_ENPOINT,data=data2,headers=headers2)
 
 
-print(r2.text)
+# print(r2.text)
 
+r3 = requests.get(ENDPOINT,headers=headers2)
+print(r3.text)
 
 
 

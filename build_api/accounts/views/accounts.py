@@ -8,7 +8,7 @@ from rest_framework import permissions,generics
 from rest_framework_jwt.settings import api_settings
 
 
-from accounts.serializers import UserRegisterSerializer
+from accounts.serializers import UserRegisterSerializer,UserDetailSerializer
 from accounts.permissions import AnnonPermissionOnly
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -21,6 +21,9 @@ jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 # Customzing authentication view response 
 
 User = get_user_model()
+
+
+
 
 
 class RegisterAPIView(generics.CreateAPIView):
