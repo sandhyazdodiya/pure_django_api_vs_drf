@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     #local
     'app',
-    'app_drf'
+    'app_drf',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,5 @@ AUTH_USER_MODEL="auth.User"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static-server","media-root")
 
 MEDIA_URL = "/media/"
+
+from build_api.restconf.main import *

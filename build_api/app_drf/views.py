@@ -1,10 +1,13 @@
 import json
 from rest_framework.views import APIView
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins,permissions
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from app_drf.models import Status
 from app_drf.serializers import StatusSerializer
 from django.shortcuts import get_object_or_404
+
+from accounts.permissions import IsOwnerOrReadOnly
 
 def is_json(json_data):
     try:
@@ -19,8 +22,8 @@ def is_json(json_data):
 class StatusDetailAPIView(mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
                     generics.RetrieveAPIView): # Create, List
-    permission_classes          = []
-    authentication_classes      = []
+    permission_classes          = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    # authentication_classes      = []
     serializer_class            = StatusSerializer
     queryset                    = Status.objects.all()
     lookup_field                = "id"
@@ -46,10 +49,15 @@ class StatusDetailAPIView(mixins.UpdateModelMixin,
 
 
 
-class StatusAPIView(mixins.CreateModelMixin,
-                    generics.ListAPIView): # Create, List
-    permission_classes = []
-    authentication_classes = []
+class StatusAPIView(mixins.CreateModelMixin,generics.ListAPIView): # Create, List
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # # permission_classes = [permissions.IsAuthenticated]
+    permission_classes          = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
+    # authentication_classes = [SessionAuthentication]
+    # permission_classes          = []
+    # authentication_classes      = []
     serializer_class = StatusSerializer
     passed_id = None
 
@@ -63,8 +71,8 @@ class StatusAPIView(mixins.CreateModelMixin,
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
 
-    # def perform_create(self,serializer):
-    #     serializer.save(user=self.request.user)
+    def perform_create(self,serializer):
+        serializer.save(user=self.request.user)
 
    
 
@@ -212,11 +220,11 @@ class StatusAPIView(mixins.CreateModelMixin,
     #     serializer.save(user=self.request.user,)
 
 
-class StatusDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = []
-    authentication_classes = []
-    queryset = Status.objects.all()
-    serializer_class = StatusSerializer
+# class StatusDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     permission_classes = []
+#     authentication_classes = []
+#     queryset = Status.objects.all()
+#     serializer_class = StatusSerializer
 
 
 # class StatusDetailAPIView(mixins.DestroyModelMixin, mixins.UpdateModelMixin,generics.RetrieveAPIView):
