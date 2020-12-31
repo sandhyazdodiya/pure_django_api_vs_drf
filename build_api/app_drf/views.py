@@ -52,21 +52,24 @@ class StatusDetailAPIView(mixins.UpdateModelMixin,
 class StatusAPIView(mixins.CreateModelMixin,generics.ListAPIView): # Create, List
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     # # permission_classes = [permissions.IsAuthenticated]
-    permission_classes          = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
     # authentication_classes = [SessionAuthentication]
     # permission_classes          = []
     # authentication_classes      = []
     serializer_class = StatusSerializer
+    permission_classes          = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     passed_id = None
+    search_fields = ("user__username","content")
+    ordering_fields = ("user__username","timestamp")
+    queryset = Status.objects.all()
 
-    def get_queryset(self):
-        qs = Status.objects.all()
-        query = self.request.GET.get("q")
-        if query is not None:
-            qs = qs.filter(content__icontains=query)
-        return qs
+    # def get_queryset(self):
+    #     qs = Status.objects.all()
+    #     query = self.request.GET.get("q")
+    #     if query is not None:
+    #         qs = qs.filter(content__icontains=query)
+    #     return qs
     
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)

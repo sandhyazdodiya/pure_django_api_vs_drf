@@ -22,5 +22,5 @@ urlpatterns = [
     path('auth/', include('accounts.urls')),
     path('user/', include(('accounts.user.urls',"accounts"),namespace = "api-user")),
     path('update/', include('app.urls')),
-    path('status/', include('app_drf.urls')),
+    path('status/', include(('app_drf.urls',"app_drf"),namespace = "api-status")),
 ]
