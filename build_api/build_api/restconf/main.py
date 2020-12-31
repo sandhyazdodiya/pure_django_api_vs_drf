@@ -12,7 +12,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 
-    )
+    ),
+    "DEFAULT_PAGINATION_CLASS" : "build_api.restconf.pagination.BuildAPIPagination",
+
 }
 
 

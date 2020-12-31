@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework import permissions,generics
+from rest_framework import permissions,generics,pagination
 from accounts.permissions import AnnonPermissionOnly
 from accounts.user.serializers import UserDetailSerializer
 
@@ -21,8 +21,10 @@ class UserDetailAPIView(generics.RetrieveAPIView):
         return {"request" : self.request}
 
 
+
 class UserStatusAPIView(generics.ListAPIView):
     serializer_class = StatusInlineSerializer
+    # pagination_class = BuildAPIPagination
 
     def get_queryset(self, *args, **kwargs):
         username = self.kwargs.get("username",None)
